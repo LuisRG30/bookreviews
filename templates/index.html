@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+
+{% block title %}
+BookReview | Sign Up
+{% endblock %}
+
+{% block body %}
+<div class="modal">
+  
+  <form id="signup" class="modal-content animate">
+    <div class="imgcontainer">
+      <img src="static/img/avatar.png" alt="Avatar" class="avatar">
+    </div>
+
+    <div class="container">
+      <label for="uname"><b>Username</b></label>
+      <input type="text" placeholder="Enter Username" name="uname" required>
+
+      <label for="psw"><b>Password</b></label>
+      <input id="pass" type="password" placeholder="Enter Password" name="psw" required>
+
+      <label for="psw"><b>Confirm Password</b></label>
+      <input id="confirm" type="password" placeholder="Enter Password" name="psw" required>
+        
+      <span><button type="submit">Sign Up</button>Already have an account? <a href="/login">Sign In</a></span>
+    </div>
+  </form>
+</div>  
+<script src="{{ url_for('static', filename='index.js')}}"></script>
+{% endblock %}
+
