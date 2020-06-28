@@ -63,6 +63,11 @@ img.avatar {
   width: 50%; /* Could be more or less, depending on screen size */
 }
 
+.credentialerror {
+  text-rendering: red;
+  padding: 5px;
+}
+
 /* Add Zoom Animation */
 .animate {
   -webkit-animation: animatezoom 0.6s;

@@ -1,9 +1,11 @@
 import os
 
-from flask import Flask, session, render_template
+from flask import Flask, session, render_template, request, jsonify
 from flask_session import Session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
+
+from models import *
 
 app = Flask(__name__)
 
@@ -27,4 +29,17 @@ def index():
 
 @app.route("/login")
 def login():
-    return "OK"
+    return render_template("login.html")
+
+@app.route("/signup", methods = ["POST"])
+def signup():
+    username = request.form.get("uname")
+    password = request.form.get("password")
+
+    #Try to get an existing user in database
+    possible_user = User.query.filter_by(username = username).first()
+    if possible_user:
+        return render_template("error.html", message="Username not available.")
+    newuser = User(username, password)
+    newuser.add_user()
+    return render_template("sucess.html", message="User account created successfully.")

@@ -1,14 +1,14 @@
 {% extends "layout.html" %}
 
 {% block title %}
-BookReview | Sign Up
+BookReview | Sign In
 {% endblock %}
 
 {% block body %}
 <div class="modal">
-  <form id="signup" class="modal-content animate" method="NULL">
+  <form id="" class="modal-content animate">
     <div class="imgcontainer">
-      <img src="static/img/avatar.png" alt="Avatar" class="avatar">
+      <img src="static/img/avatar2.png" alt="Avatar" class="avatar">
     </div>
 
     <div class="container">
@@ -17,9 +17,10 @@ BookReview | Sign Up
 
       <label for="psw"><b>Password</b></label>
       <input id="pass" type="password" placeholder="Enter Password" name="psw" required>
-      <span><button type="submit">Sign Up</button>Already have an account? <a href="/login">Sign In</a></span>
+        
+      <div id="badpass" class="credentialerror"></div>
+      <span><button type="submit">Sign In</button>Don´t have an accoutn? <a href="/">Sign Up</a></span>
     </div>
   </form>
-</div> 
+</div>  
 {% endblock %}
-

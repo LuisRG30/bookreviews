@@ -5,8 +5,13 @@ db = SQLAlchemy()
 class User(db.Model):
     __tablename__ = "users"
     id = db.Column(db.Integer, primary_key = True)
-    username = db.Column(db.String, nullable = False)
+    username = db.Column(db.String, nullable = False, unique = True)
     password = db.Column(db.String, nullable = False)
+
+    def add_user(self):
+        u = User(username = self.username, password = self.password)
+        db.session.add(u)
+        db.session.commit()
 
 class Book(db.Model):
     __tablename__ = "books"
