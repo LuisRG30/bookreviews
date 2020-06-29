@@ -75,6 +75,10 @@ def books():
     
 @app.route("/books/<int:book_id>")
 def book(book_id):
+    #check if user is logged in
+    if session.get("id") is None:
+            return render_template("error.html", message="User not logged in.")
+
     #Check if requested book exists
     book = db.execute("SELECT * FROM books WHERE id = :id", {"id": book_id}).fetchone()
     if book is None:
