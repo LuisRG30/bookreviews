@@ -6,7 +6,7 @@ BookReview | Sign In
 
 {% block body %}
 <div class="modal">
-  <form id="" class="modal-content animate">
+  <form id="" class="modal-content animate" action="{{ url_for('books') }}", method="post">
     <div class="imgcontainer">
       <img src="static/img/avatar2.png" alt="Avatar" class="avatar">
     </div>
