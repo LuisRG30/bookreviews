@@ -41,7 +41,7 @@ def signup():
     db.execute("INSERT INTO users (username, password) VALUES (:username, :password)",
     {"username": username, "password": password})
     db.commit()
-    return render_template("sucess.html", message="User account created successfully.")
+    return render_template("success.html", message="User account created successfully.")
 
 @app.route("/books", methods = ["GET", "POST"])
 def books():
@@ -50,9 +50,12 @@ def books():
         username = request.form.get("uname")
         password = request.form.get("psw")
 
+        if username is None or password is None:
+            return render_template("error.html", message="User not logged in.")
+
         #Query for user in database
-        user = db.execute("SELECT * FROM users WHERE username = :username", {"username": username})
-        if user.rowcount == 0:
+        user = db.execute("SELECT * FROM users WHERE username = :username", {"username": username}).fetchone()
+        if user is None:
             return render_template("error.html", message="There is no acount associated with username \"" + username + "\".")
         if password != user.password:
             return render_template("error.html", message="Incorrect username or password.")
@@ -73,8 +76,13 @@ def books():
 @app.route("/books/<int:book_id>")
 def book(book_id):
     #Check if requested book exists
-    book = db.execute("SELEC * FROM books WHERE id = :id", {"id": book_id}).fetchone()
+    book = db.execute("SELECT * FROM books WHERE id = :id", {"id": book_id}).fetchone()
     if book is None:
         return render_template("error.html", message="Book not found.")
     #Render template with book details
     return render_template("book.html", book=book)
+
+@app.route("/signout", methods = ["POST"])
+def signout():
+    session.clear()
+    return render_template("success.html", message="Logged out successfully.")
