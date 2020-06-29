@@ -44,7 +44,7 @@ def signup():
     return render_template("sucess.html", message="User account created successfully.")
 
 @app.route("/books", methods = ["GET", "POST"])
-def signin():
+def books():
     if request.method == "POST":
         #Get form data
         username = request.form.get("uname")
@@ -68,5 +68,13 @@ def signin():
     #Query for books
     books = db.execute("SELECT * FROM books").fetchall()
 
-    render_template("books.html", books=books)
+    return render_template("books.html", books=books)
     
+@app.route("/books/<int:book_id>")
+def book(book_id):
+    #Check if requested book exists
+    book = db.execute("SELEC * FROM books WHERE id = :id", {"id": book_id}).fetchone()
+    if book is None:
+        return render_template("error.html", message="Book not found.")
+    #Render template with book details
+    return render_template("book.html", book=book)
