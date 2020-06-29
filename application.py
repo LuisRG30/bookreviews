@@ -42,3 +42,31 @@ def signup():
     {"username": username, "password": password})
     db.commit()
     return render_template("sucess.html", message="User account created successfully.")
+
+@app.route("/books", methods = ["GET", "POST"])
+def signin():
+    if request.method == "POST":
+        #Get form data
+        username = request.form.get("uname")
+        password = request.form.get("psw")
+
+        #Query for user in database
+        user = db.execute("SELECT * FROM users WHERE username = :username", {"username": username})
+        if user.rowcount == 0:
+            return render_template("error.html", message="There is no acount associated with username \"" + username + "\".")
+        if password != user.password:
+            return render_template("error.html", message="Incorrect username or password.")
+        
+        #Save user's session
+        if session.get("id") is None:
+            session["id"] = user.id
+
+    if request.method == "GET":
+        if session.get("id") is None:
+            return render_template("error.html", message="User not logged in.")
+
+    #Query for books
+    books = db.execute("SELECT * FROM books").fetchall()
+
+    render_template("books.html", books=books)
+    
