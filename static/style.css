@@ -15,11 +15,12 @@ button {
   background-color: #4CAF50;
   color: white;
   padding: 14px 20px;
-  margin: 8px 0;
+  margin: 8px;
   border: none;
   cursor: pointer;
   width: 100%;
 }
+
 
 button:hover {
   opacity: 0.8;
@@ -43,7 +44,7 @@ img.avatar {
 
 /* The Modal (background) */
 .modal {
-  position: fixed; /* Stay in place */
+  position: relative; /* Stay in place */
   z-index: 1; /* Sit on top */
   left: 0;
   top: 0;
@@ -61,6 +62,23 @@ img.avatar {
   margin: auto auto auto auto; 
   border: 1px solid #888;
   width: 50%; /* Could be more or less, depending on screen size */
+  padding: 30px;
+}
+
+.formhead {
+  text-align: center;
+  color: #6C544F;
+}
+
+.logout {
+  width: 15%;
+  float: right;
+  background-color: blue;
+}
+
+.enter {
+  width: 40%;
+  float: left;
 }
 
 .credentialerror {
