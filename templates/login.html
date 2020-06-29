@@ -7,6 +7,8 @@ BookReview | Sign In
 {% block body %}
 <div class="modal">
   <form id="" class="modal-content animate" action="{{ url_for('books') }}", method="post">
+    <h1 class= "formhead">BookReview</h1>
+    <h1 class= "formhead">Sign In</h1>
     <div class="imgcontainer">
       <img src="static/img/avatar2.png" alt="Avatar" class="avatar">
     </div>
@@ -19,7 +21,8 @@ BookReview | Sign In
       <input id="pass" type="password" placeholder="Enter Password" name="psw" required>
         
       <div id="badpass" class="credentialerror"></div>
-      <span><button type="submit">Sign In</button>Don´t have an accoutn? <a href="/">Sign Up</a></span>
+      <span><button class="enter">Sign In</button>
+      <p>Don´t have an account yet?<a href="/">Sign Up</a></p>
     </div>
   </form>
 </div>  
