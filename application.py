@@ -5,8 +5,6 @@ from flask_session import Session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 
-from models import *
-
 app = Flask(__name__)
 
 # Check for environment variable
@@ -34,12 +32,13 @@ def login():
 @app.route("/signup", methods = ["POST"])
 def signup():
     username = request.form.get("uname")
-    password = request.form.get("password")
+    password = request.form.get("psw")
 
     #Try to get an existing user in database
-    possible_user = User.query.filter_by(username = username).first()
-    if possible_user:
-        return render_template("error.html", message="Username not available.")
-    newuser = User(username, password)
-    newuser.add_user()
+    if db.execute("SELECT * FROM users WHERE username = :username", {"username": username}).rowcount != 0:
+        return render_template("error.html", message="Username \"" + username + "\" is not available.")
+
+    db.execute("INSERT INTO users (username, password) VALUES (:username, :password)",
+    {"username": username, "password": password})
+    db.commit()
     return render_template("sucess.html", message="User account created successfully.")

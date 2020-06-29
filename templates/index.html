@@ -6,7 +6,7 @@ BookReview | Sign Up
 
 {% block body %}
 <div class="modal">
-  <form id="signup" class="modal-content animate" method="NULL">
+  <form id="signup" class="modal-content animate" action="{{ url_for('signup') }}", method="post">
     <div class="imgcontainer">
       <img src="static/img/avatar.png" alt="Avatar" class="avatar">
     </div>
@@ -17,7 +17,7 @@ BookReview | Sign Up
 
       <label for="psw"><b>Password</b></label>
       <input id="pass" type="password" placeholder="Enter Password" name="psw" required>
-      <span><button type="submit">Sign Up</button>Already have an account? <a href="/login">Sign In</a></span>
+      <span><button>Sign Up</button>Already have an account? <a href="/login">Sign In</a></span>
     </div>
   </form>
 </div> 
