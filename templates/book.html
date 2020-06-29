@@ -5,11 +5,24 @@ BookReview | {{ book.title }}
 {% endblock %}
 
 {% block body %}
-<h1>Book Details</h1>
-<ul>
-    <li>Isbn: {{ book.isbn }}</li>
-    <li>Title: {{book.title }}</li>
-    <li>Author: {{ book.author }}</li>
-    <li>Year: {{ book.year }}</li>
-</ul>
+<form action="{{ url_for('signout') }} ", method="post"><button class="logout">Log out</button></form>
+<h1 class="pagehead">Book Details</h1>
+<table>
+    <tr>
+        <th>ISBN</th>
+        <td>{{ book.isbn }}</td>
+    </tr>
+    <tr>
+        <th>Title</th>
+        <td>{{ book.title }}</td>
+    </tr>
+    <tr>
+        <th>Author</th>
+        <td>{{ book.author }}</td>
+    </tr>
+    <tr>
+        <th>Year</th>
+        <td>{{ book.year }}</td>
+    </tr>
+</table>
 {% endblock %}
