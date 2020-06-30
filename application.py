@@ -1,4 +1,5 @@
 import os
+import requests
 
 from flask import Flask, session, render_template, request, jsonify
 from flask_session import Session
@@ -51,7 +52,29 @@ def books():
         password = request.form.get("psw")
 
         if username is None or password is None:
-            return render_template("error.html", message="User not logged in.")
+            #Check if search is really going on
+            isbn = request.form.get("isbn")
+            title = request.form.get("title")
+            author = request.form.get("author")
+            year = request.form.get("year")
+
+            if isbn is None and title is None and author is None and year is None:
+                books = db.execute("SELECT * FROM books").fetchall()
+                return render_template("books.html", books=books)
+            else:
+                #Prepare variables for LIKE query
+                isbn = "%" + isbn + "%"
+                title = "%" + title + "%"
+                author = "%" + author + "%"
+
+                if year == "":
+                    books = db.execute("SELECT * FROM books WHERE isbn LIKE :isbn AND title LIKE :title AND author LIKE :author",
+                    {"isbn": isbn, "title": title, "author": author})
+                else:
+                    books = db.execute("SELECT * FROM books WHERE isbn LIKE :isbn AND title LIKE :title AND author LIKE :author AND year = :year",
+                    {"isbn": isbn, "title": title, "author": author, "year":year})
+                return render_template("books.html", books=books)
+                
 
         #Query for user in database
         user = db.execute("SELECT * FROM users WHERE username = :username", {"username": username}).fetchone()
