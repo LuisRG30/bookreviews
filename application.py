@@ -73,7 +73,7 @@ def books():
 
     return render_template("books.html", books=books)
     
-@app.route("/books/<int:book_id>")
+@app.route("/books/<int:book_id>", methods = ["GET", "POST"])
 def book(book_id):
     #check if user is logged in
     if session.get("id") is None:
@@ -83,8 +83,20 @@ def book(book_id):
     book = db.execute("SELECT * FROM books WHERE id = :id", {"id": book_id}).fetchone()
     if book is None:
         return render_template("error.html", message="Book not found.")
+
+    if request.method == "POST":
+        logged_user_id = session.get("id")
+        user = db.execute("SELECT * FROM users WHERE id = :id", {"id": logged_user_id}).fetchone()
+        username = user.username
+        score = request.form.get("score")
+        review = request.form.get("review")
+        db.execute("INSERT INTO reviews (score, review, book_id, username) VALUES (:score, :review, :book_id, :username)",
+        {"score": score, "review": review, "book_id": book_id, "username": username})
+        db.commit()
+
     #Render template with book details
-    return render_template("book.html", book=book)
+    reviews = db.execute("SELECT * FROM reviews WHERE book_id = :book_id", {"book_id": book_id}).fetchall()
+    return render_template("book.html", book=book, reviews=reviews)
 
 @app.route("/signout", methods = ["POST"])
 def signout():
